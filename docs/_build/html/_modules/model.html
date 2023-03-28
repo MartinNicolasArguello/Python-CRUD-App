@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>model &mdash; Martin Arguello entrega final 00.00.01 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Martin Arguello entrega final
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">Martin Arguello python avanzado</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Martin Arguello entrega final</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Module code</a></li>
+      <li class="breadcrumb-item active">model</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for model</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">tkinter</span> <span class="kn">import</span> <span class="n">messagebox</span>
+<span class="kn">from</span> <span class="nn">tkinter</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">sqlite3</span>
+<span class="kn">import</span> <span class="nn">observers</span>
+
+<span class="c1"># import datetime</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">import</span> <span class="nn">re</span>
+
+
+<span class="sd">&quot;&quot;&quot;En este módulo se encuentra toda la lógica de la aplicación dentro de una clase &quot;Model&quot;, que hereda de la clase observable, de esta que obtenemos el método &quot;notify&quot; que se usa al final de cada operación para que los observadores realicen su función&quot;&quot;&quot;</span>
+
+
+<div class="viewcode-block" id="Model"><a class="viewcode-back" href="../model.html#model.Model">[docs]</a><span class="k">class</span> <span class="nc">Model</span><span class="p">(</span><span class="n">observers</span><span class="o">.</span><span class="n">Observed</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">con</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">&quot;mibase.db&quot;</span><span class="p">)</span>
+            <span class="n">cursor</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+            <span class="c1"># sql = &quot;&quot;&quot;CREATE TABLE test</span>
+            <span class="c1">#             (dni varchar(20) PRIMARY KEY,</span>
+            <span class="c1">#             lastname varchar(20) NOT NULL,</span>
+            <span class="c1">#             class varchar(20) NOT NULL,</span>
+            <span class="c1">#             plan varchar(20) NOT NULL)</span>
+            <span class="c1">#             &quot;&quot;&quot;</span>
+            <span class="c1"># cursor.execute(sql)</span>
+            <span class="c1"># con.commit()</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;error?&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Model.decorator"><a class="viewcode-back" href="../model.html#model.Model.decorator">[docs]</a>    <span class="k">def</span> <span class="nf">decorator</span><span class="p">(</span><span class="n">function</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;El decorador “envuelve” a las funciones que modifican entradas en la base de datos, su única función es “avisar” por consola de la modificación, imprimiendo desde que función fue llamado y a que hora.&quot;&quot;&quot;</span>
+        <span class="n">currentDateAndTime</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+        <span class="n">currentTime</span> <span class="o">=</span> <span class="n">currentDateAndTime</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%H:%M:%S&quot;</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">inner</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+
+            <span class="nb">print</span><span class="p">(</span>
+                <span class="s2">&quot;Called at </span><span class="si">%s</span><span class="s2"> &quot;</span> <span class="o">%</span> <span class="n">currentTime</span>
+                <span class="o">+</span> <span class="s2">&quot; from function: &quot;</span>
+                <span class="o">+</span> <span class="n">function</span><span class="o">.</span><span class="vm">__name__</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+            <span class="p">)</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="n">function</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">val</span>
+
+        <span class="k">return</span> <span class="n">inner</span></div>
+
+<div class="viewcode-block" id="Model.create_base"><a class="viewcode-back" href="../model.html#model.Model.create_base">[docs]</a>    <span class="k">def</span> <span class="nf">create_base</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="n">con</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">&quot;mibase.db&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">con</span></div>
+
+<div class="viewcode-block" id="Model.add_success"><a class="viewcode-back" href="../model.html#model.Model.add_success">[docs]</a>    <span class="k">def</span> <span class="nf">add_success</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">column</span><span class="p">,</span> <span class="n">root</span><span class="p">,</span> <span class="n">success</span><span class="p">,</span> <span class="n">button_container</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Presenta un mensaje temporal (1 segundo de duración) informando el éxito de la operación &quot;Insert&quot; o &quot;Delete&quot;, dependiendo de cual de estas dos funciones llame al método, será la ubicación del mensaje temporal&quot;&quot;&quot;</span>
+        <span class="n">success</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">in_</span><span class="o">=</span><span class="n">button_container</span><span class="p">,</span> <span class="n">row</span><span class="o">=</span><span class="n">row</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="n">column</span><span class="p">)</span>
+        <span class="n">root</span><span class="o">.</span><span class="n">after</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="n">success</span><span class="o">.</span><span class="n">grid_forget</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Model.insert"><a class="viewcode-back" href="../model.html#model.Model.insert">[docs]</a>    <span class="nd">@decorator</span>
+    <span class="k">def</span> <span class="nf">insert</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">root</span><span class="p">,</span>
+        <span class="n">tree</span><span class="p">,</span>
+        <span class="n">dni</span><span class="p">,</span>
+        <span class="n">lastname</span><span class="p">,</span>
+        <span class="n">class_</span><span class="p">,</span>
+        <span class="n">plan</span><span class="p">,</span>
+        <span class="n">success</span><span class="p">,</span>
+        <span class="n">button_container</span><span class="p">,</span>
+        <span class="n">dni_add</span><span class="p">,</span>
+        <span class="n">lastname_add</span><span class="p">,</span>
+        <span class="n">class_add</span><span class="p">,</span>
+        <span class="n">plan_add</span><span class="p">,</span>
+        <span class="n">del_btn</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Se encarga de los registros a la base de datos, usando validadores para que la información tenga el formato deseado, y verificando de que el DNI (que uso como primary key) ya no se encuentre en uso.&quot;&quot;&quot;</span>
+        <span class="n">dni_pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s2">&quot;^[0-9]{7,8}$&quot;</span><span class="p">)</span>
+        <span class="n">lastname_pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s2">&quot;^([A-Z][a-z]{0,20})([\s][A-Z][a-z]{0,20})?$&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">dni_pattern</span><span class="p">,</span> <span class="n">dni</span><span class="p">)</span> <span class="ow">and</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">lastname_pattern</span><span class="p">,</span> <span class="n">lastname</span><span class="p">):</span>
+            <span class="n">con</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_base</span><span class="p">()</span>
+            <span class="n">cursor</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="p">(</span><span class="n">dni</span><span class="p">,</span> <span class="n">lastname</span><span class="p">,</span> <span class="n">class_</span><span class="p">,</span> <span class="n">plan</span><span class="p">)</span>
+            <span class="n">sql</span> <span class="o">=</span> <span class="s2">&quot;INSERT INTO test (dni, lastname, class, plan) VALUES(?, ?, ?, ?);&quot;</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sql</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+                <span class="n">con</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">update_treeview</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">del_btn</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">add_success</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">root</span><span class="p">,</span> <span class="n">success</span><span class="p">,</span> <span class="n">button_container</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">reset_add_form</span><span class="p">(</span><span class="n">dni_add</span><span class="p">,</span> <span class="n">lastname_add</span><span class="p">,</span> <span class="n">class_add</span><span class="p">,</span> <span class="n">plan_add</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">notify</span><span class="p">()</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="n">messagebox</span><span class="o">.</span><span class="n">showinfo</span><span class="p">(</span><span class="s2">&quot;error&quot;</span><span class="p">,</span> <span class="s2">&quot;Repeated DNI&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">dni_pattern</span><span class="p">,</span> <span class="n">dni</span><span class="p">):</span>
+                <span class="n">messagebox</span><span class="o">.</span><span class="n">showinfo</span><span class="p">(</span><span class="s2">&quot;error&quot;</span><span class="p">,</span> <span class="s2">&quot;Invalid DNI&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">lastname_pattern</span><span class="p">,</span> <span class="n">lastname</span><span class="p">):</span>
+                <span class="n">messagebox</span><span class="o">.</span><span class="n">showinfo</span><span class="p">(</span><span class="s2">&quot;error&quot;</span><span class="p">,</span> <span class="s2">&quot;Invalid Last Name&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Model.delete"><a class="viewcode-back" href="../model.html#model.Model.delete">[docs]</a>    <span class="nd">@decorator</span>
+    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tree</span><span class="p">,</span> <span class="n">del_btn</span><span class="p">,</span> <span class="n">root</span><span class="p">,</span> <span class="n">success</span><span class="p">,</span> <span class="n">button_container</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Se encarga de eliminar entradas de la base de datos. permite eliminar mas de un elemento por operación.&quot;&quot;&quot;</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">selection</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tree</span><span class="o">.</span><span class="n">selection</span><span class="p">())</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">selection</span> <span class="ow">in</span> <span class="n">value</span><span class="p">:</span>
+                <span class="n">item</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">item</span><span class="p">(</span><span class="n">selection</span><span class="p">)</span>
+                <span class="n">dni</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">]</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="p">(</span><span class="n">dni</span><span class="p">,)</span>
+                <span class="n">sql</span> <span class="o">=</span> <span class="s2">&quot;DELETE FROM test WHERE dni =?;&quot;</span>
+                <span class="n">con</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_base</span><span class="p">()</span>
+                <span class="n">cursor</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+                <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sql</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+                <span class="n">con</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+                <span class="n">tree</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">selection</span><span class="p">)</span>
+                <span class="n">del_btn</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">state</span><span class="o">=</span><span class="s2">&quot;disabled&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">add_success</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">root</span><span class="p">,</span> <span class="n">success</span><span class="p">,</span> <span class="n">button_container</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">notify</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">item</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">item</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+            <span class="n">dni</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">]</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="p">(</span><span class="n">dni</span><span class="p">,)</span>
+            <span class="n">sql</span> <span class="o">=</span> <span class="s2">&quot;DELETE FROM test WHERE dni =?;&quot;</span>
+            <span class="n">con</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_base</span><span class="p">()</span>
+            <span class="n">cursor</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+            <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sql</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+            <span class="n">con</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+            <span class="n">tree</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+            <span class="n">del_btn</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">state</span><span class="o">=</span><span class="s2">&quot;disabled&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">add_success</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">root</span><span class="p">,</span> <span class="n">success</span><span class="p">,</span> <span class="n">button_container</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">notify</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Model.submit_changes"><a class="viewcode-back" href="../model.html#model.Model.submit_changes">[docs]</a>    <span class="nd">@decorator</span>
+    <span class="k">def</span> <span class="nf">submit_changes</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">var1</span><span class="p">,</span>
+        <span class="n">var2</span><span class="p">,</span>
+        <span class="n">var3</span><span class="p">,</span>
+        <span class="n">modify_label7</span><span class="p">,</span>
+        <span class="n">modify_label8</span><span class="p">,</span>
+        <span class="n">tree</span><span class="p">,</span>
+        <span class="n">modify_container2</span><span class="p">,</span>
+        <span class="n">entry_dni_modify</span><span class="p">,</span>
+        <span class="n">modify_combo1</span><span class="p">,</span>
+        <span class="n">modify_combo2</span><span class="p">,</span>
+        <span class="n">del_btn</span><span class="p">,</span>
+        <span class="n">success2</span><span class="p">,</span>
+        <span class="n">modify_container1</span><span class="p">,</span>
+        <span class="n">root</span><span class="p">,</span>
+        <span class="n">error</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Se encarga de modificar entradas ya existentes en la base de datos.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">var2</span> <span class="o">==</span> <span class="n">modify_label7</span> <span class="ow">and</span> <span class="n">var3</span> <span class="o">==</span> <span class="n">modify_label8</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">modify_error</span><span class="p">(</span><span class="n">error</span><span class="p">,</span> <span class="n">modify_container2</span><span class="p">,</span> <span class="n">root</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">con</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_base</span><span class="p">()</span>
+            <span class="n">cursor</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+            <span class="n">sql</span> <span class="o">=</span> <span class="s2">&quot;UPDATE test SET class = ?, plan = ? WHERE dni = ?;&quot;</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="p">(</span><span class="n">var2</span><span class="p">,</span> <span class="n">var3</span><span class="p">,</span> <span class="n">var1</span><span class="p">)</span>
+            <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sql</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+            <span class="n">con</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">update_treeview</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">del_btn</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">reset_mod_form</span><span class="p">(</span>
+                <span class="n">modify_container2</span><span class="p">,</span> <span class="n">entry_dni_modify</span><span class="p">,</span> <span class="n">modify_combo1</span><span class="p">,</span> <span class="n">modify_combo2</span>
+            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">modify_success</span><span class="p">(</span><span class="n">success2</span><span class="p">,</span> <span class="n">modify_container1</span><span class="p">,</span> <span class="n">root</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">notify</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Model.reset_add_form"><a class="viewcode-back" href="../model.html#model.Model.reset_add_form">[docs]</a>    <span class="k">def</span> <span class="nf">reset_add_form</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dni_add</span><span class="p">,</span> <span class="n">lastname_add</span><span class="p">,</span> <span class="n">class_add</span><span class="p">,</span> <span class="n">plan_add</span><span class="p">):</span>
+        <span class="n">dni_add</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">),</span>
+        <span class="n">lastname_add</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">),</span>
+        <span class="n">class_add</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="kc">None</span><span class="p">),</span>
+        <span class="n">plan_add</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Model.verify_search"><a class="viewcode-back" href="../model.html#model.Model.verify_search">[docs]</a>    <span class="k">def</span> <span class="nf">verify_search</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">searched_dni</span><span class="p">,</span>
+        <span class="n">tab2</span><span class="p">,</span>
+        <span class="n">modify_container2</span><span class="p">,</span>
+        <span class="n">modify_label5</span><span class="p">,</span>
+        <span class="n">modify_label6</span><span class="p">,</span>
+        <span class="n">modify_label7</span><span class="p">,</span>
+        <span class="n">modify_label8</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Comprueba si el DNI pertenece a un usuario.&quot;&quot;&quot;</span>
+        <span class="n">sql</span> <span class="o">=</span> <span class="s2">&quot;SELECT * FROM test WHERE dni=?;&quot;</span>
+        <span class="n">con</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_base</span><span class="p">()</span>
+        <span class="n">cursor</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sql</span><span class="p">,</span> <span class="p">(</span><span class="n">searched_dni</span><span class="p">,))</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">data</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">display_form</span><span class="p">(</span>
+                <span class="n">data</span><span class="p">,</span>
+                <span class="n">tab2</span><span class="p">,</span>
+                <span class="n">modify_container2</span><span class="p">,</span>
+                <span class="n">modify_label5</span><span class="p">,</span>
+                <span class="n">modify_label6</span><span class="p">,</span>
+                <span class="n">modify_label7</span><span class="p">,</span>
+                <span class="n">modify_label8</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">messagebox</span><span class="o">.</span><span class="n">showinfo</span><span class="p">(</span><span class="s2">&quot;error&quot;</span><span class="p">,</span> <span class="s2">&quot;Invalid DNI&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Model.display_form"><a class="viewcode-back" href="../model.html#model.Model.display_form">[docs]</a>    <span class="k">def</span> <span class="nf">display_form</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">data</span><span class="p">,</span>
+        <span class="n">tab2</span><span class="p">,</span>
+        <span class="n">modify_container2</span><span class="p">,</span>
+        <span class="n">modify_label5</span><span class="p">,</span>
+        <span class="n">modify_label6</span><span class="p">,</span>
+        <span class="n">modify_label7</span><span class="p">,</span>
+        <span class="n">modify_label8</span><span class="p">,</span>
+    <span class="p">):</span>
+
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Una vez verificado el DNI, esta función presenta el formulario para modificar el usuario.&quot;&quot;&quot;</span>
+        <span class="n">modify_container2</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">in_</span><span class="o">=</span><span class="n">tab2</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+        <span class="n">modify_label5</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">modify_label6</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">modify_label7</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">])</span>
+        <span class="n">modify_label8</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">3</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="Model.reset_mod_form"><a class="viewcode-back" href="../model.html#model.Model.reset_mod_form">[docs]</a>    <span class="k">def</span> <span class="nf">reset_mod_form</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">modify_container2</span><span class="p">,</span> <span class="n">entry_dni_modify</span><span class="p">,</span> <span class="n">modify_combo1</span><span class="p">,</span> <span class="n">modify_combo2</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Después de realizada la operación, vuelve a esconder el formulario para modificar.&quot;&quot;&quot;</span>
+        <span class="n">modify_container2</span><span class="o">.</span><span class="n">forget</span><span class="p">()</span>
+        <span class="n">entry_dni_modify</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;end&quot;</span><span class="p">)</span>
+        <span class="n">modify_combo1</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="n">modify_combo2</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Model.update_treeview"><a class="viewcode-back" href="../model.html#model.Model.update_treeview">[docs]</a>    <span class="k">def</span> <span class="nf">update_treeview</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tree</span><span class="p">,</span> <span class="n">del_btn</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Actualiza la información que presenta el treeview, las restantes funciones sirven para mostrar solo los miembros pertenecientes a la clase correspondiente.&quot;&quot;&quot;</span>
+        <span class="n">records</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">get_children</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">records</span><span class="p">:</span>
+            <span class="n">tree</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+        <span class="n">sql</span> <span class="o">=</span> <span class="s2">&quot;SELECT * FROM test ORDER BY lastname DESC&quot;</span>
+        <span class="n">con</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_base</span><span class="p">()</span>
+        <span class="n">cursor</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sql</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">member</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
+            <span class="n">tree</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">member</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">values</span><span class="o">=</span><span class="p">(</span><span class="n">member</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">member</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">member</span><span class="p">[</span><span class="mi">3</span><span class="p">]))</span>
+        <span class="n">del_btn</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">state</span><span class="o">=</span><span class="s2">&quot;disabled&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Model.display_weights"><a class="viewcode-back" href="../model.html#model.Model.display_weights">[docs]</a>    <span class="k">def</span> <span class="nf">display_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tree</span><span class="p">,</span> <span class="n">del_btn</span><span class="p">):</span>
+        <span class="n">records</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">get_children</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">records</span><span class="p">:</span>
+            <span class="n">tree</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+        <span class="n">sql</span> <span class="o">=</span> <span class="s2">&quot;SELECT * FROM test WHERE class=&#39;Weight Machines&#39; ORDER BY lastname DESC&quot;</span>
+        <span class="n">con</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_base</span><span class="p">()</span>
+        <span class="n">cursor</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sql</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">member</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
+            <span class="n">tree</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">member</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">values</span><span class="o">=</span><span class="p">(</span><span class="n">member</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">member</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">member</span><span class="p">[</span><span class="mi">3</span><span class="p">]))</span>
+        <span class="n">del_btn</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">state</span><span class="o">=</span><span class="s2">&quot;disabled&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Model.display_crossfit"><a class="viewcode-back" href="../model.html#model.Model.display_crossfit">[docs]</a>    <span class="k">def</span> <span class="nf">display_crossfit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tree</span><span class="p">,</span> <span class="n">del_btn</span><span class="p">):</span>
+        <span class="n">records</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">get_children</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">records</span><span class="p">:</span>
+            <span class="n">tree</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+        <span class="n">sql</span> <span class="o">=</span> <span class="s2">&quot;SELECT * FROM test WHERE class=&#39;Cross Fit&#39; ORDER BY lastname DESC&quot;</span>
+        <span class="n">con</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_base</span><span class="p">()</span>
+        <span class="n">cursor</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sql</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">member</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
+            <span class="n">tree</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">member</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">values</span><span class="o">=</span><span class="p">(</span><span class="n">member</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">member</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">member</span><span class="p">[</span><span class="mi">3</span><span class="p">]))</span>
+        <span class="n">del_btn</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">state</span><span class="o">=</span><span class="s2">&quot;disabled&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Model.display_spinning"><a class="viewcode-back" href="../model.html#model.Model.display_spinning">[docs]</a>    <span class="k">def</span> <span class="nf">display_spinning</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tree</span><span class="p">,</span> <span class="n">del_btn</span><span class="p">):</span>
+        <span class="n">records</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">get_children</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">records</span><span class="p">:</span>
+            <span class="n">tree</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+        <span class="n">sql</span> <span class="o">=</span> <span class="s2">&quot;SELECT * FROM test WHERE class=&#39;Spinning&#39; ORDER BY lastname DESC&quot;</span>
+        <span class="n">con</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_base</span><span class="p">()</span>
+        <span class="n">cursor</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sql</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">member</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
+            <span class="n">tree</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">member</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">values</span><span class="o">=</span><span class="p">(</span><span class="n">member</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">member</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">member</span><span class="p">[</span><span class="mi">3</span><span class="p">]))</span>
+        <span class="n">del_btn</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">state</span><span class="o">=</span><span class="s2">&quot;disabled&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Model.modify_success"><a class="viewcode-back" href="../model.html#model.Model.modify_success">[docs]</a>    <span class="k">def</span> <span class="nf">modify_success</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">success2</span><span class="p">,</span> <span class="n">modify_container1</span><span class="p">,</span> <span class="n">root</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Se encarga de presentar un mensaje temporal (1 segundo de duración) informando el éxito de la operación &quot;Modify&quot; &quot;&quot;&quot;</span>
+        <span class="n">success2</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span>
+            <span class="n">in_</span><span class="o">=</span><span class="n">modify_container1</span><span class="p">,</span> <span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">columnspan</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">W</span> <span class="o">+</span> <span class="n">E</span>
+        <span class="p">)</span>
+        <span class="n">root</span><span class="o">.</span><span class="n">after</span><span class="p">(</span><span class="mi">1500</span><span class="p">,</span> <span class="n">success2</span><span class="o">.</span><span class="n">grid_forget</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Model.modify_error"><a class="viewcode-back" href="../model.html#model.Model.modify_error">[docs]</a>    <span class="k">def</span> <span class="nf">modify_error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">error</span><span class="p">,</span> <span class="n">modify_container2</span><span class="p">,</span> <span class="n">root</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Se encarga de presentar un mensaje temporal (1 segundo de duración) informando un fallo de la operación &quot;Modify&quot; &quot;&quot;&quot;</span>
+        <span class="n">error</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">in_</span><span class="o">=</span><span class="n">modify_container2</span><span class="p">,</span> <span class="n">row</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+        <span class="n">root</span><span class="o">.</span><span class="n">after</span><span class="p">(</span><span class="mi">1500</span><span class="p">,</span> <span class="n">error</span><span class="o">.</span><span class="n">grid_forget</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Martin Arguello.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

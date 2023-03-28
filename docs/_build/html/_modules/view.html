@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>view &mdash; Martin Arguello entrega final 00.00.01 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Martin Arguello entrega final
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">Martin Arguello python avanzado</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Martin Arguello entrega final</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Module code</a></li>
+      <li class="breadcrumb-item active">view</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for view</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">model</span> <span class="kn">import</span> <span class="n">Model</span>
+<span class="kn">from</span> <span class="nn">tkinter</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">tkinter</span> <span class="kn">import</span> <span class="n">ttk</span>
+<span class="kn">import</span> <span class="nn">observers</span>
+<span class="kn">import</span> <span class="nn">re</span>
+
+<span class="sd">&quot;&quot;&quot;En este módulo se encuentra nuestra vista, que sera instanciada en el controlador para iniciar la aplicación. Es aquí también donde se instancian las demás clases importantes, el modelo y los observadores.&quot;&quot;&quot;</span>
+
+
+<div class="viewcode-block" id="View"><a class="viewcode-back" href="../view.html#view.View">[docs]</a><span class="k">class</span> <span class="nc">View</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">window</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="n">window</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Trabajo integrador final&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">geometry</span><span class="p">(</span><span class="s2">&quot;1100x700&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">iconbitmap</span><span class="p">(</span><span class="s2">&quot;icon.ico&quot;</span><span class="p">)</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Se instancia el modelo.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">obj</span> <span class="o">=</span> <span class="n">Model</span><span class="p">()</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Se instancia el observador, pasando el modelo(que es nuestro observable) como parámetro.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model_observer</span> <span class="o">=</span> <span class="n">observers</span><span class="o">.</span><span class="n">Observer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">obj</span><span class="p">)</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Se agrega el observador al modelo (observable)&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">obj</span><span class="o">.</span><span class="n">add_observer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_observer</span><span class="p">)</span>
+        <span class="c1"># Header</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span>
+            <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Olimpus Gym&quot;</span><span class="p">,</span>
+            <span class="n">background</span><span class="o">=</span><span class="s2">&quot;#231F20&quot;</span><span class="p">,</span>
+            <span class="n">foreground</span><span class="o">=</span><span class="s2">&quot;#8E793E&quot;</span><span class="p">,</span>
+            <span class="n">font</span><span class="o">=</span><span class="s2">&quot;times 35 bold &quot;</span><span class="p">,</span>
+            <span class="n">height</span><span class="o">=</span><span class="s2">&quot;2&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">side</span><span class="o">=</span><span class="s2">&quot;top&quot;</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Notebook</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">notebook</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">Notebook</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="mi">1100</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">150</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">tab1</span> <span class="o">=</span> <span class="n">Frame</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">notebook</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tab2</span> <span class="o">=</span> <span class="n">Frame</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">notebook</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">notebook</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tab1</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Add/Delete&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">notebook</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tab2</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Modify&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">notebook</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">expand</span><span class="o">=</span><span class="s2">&quot;true&quot;</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="s2">&quot;both&quot;</span><span class="p">)</span>
+
+        <span class="c1"># TAB 1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">invisible_container</span> <span class="o">=</span> <span class="n">Frame</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">form_container</span> <span class="o">=</span> <span class="n">Frame</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">form_container</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">in_</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tab1</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="n">LEFT</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">button_container</span> <span class="o">=</span> <span class="n">Frame</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">button_container</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">in_</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tab1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_btn</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span>
+            <span class="n">text</span><span class="o">=</span><span class="s2">&quot;ADD&quot;</span><span class="p">,</span>
+            <span class="n">background</span><span class="o">=</span><span class="s2">&quot;#231F20&quot;</span><span class="p">,</span>
+            <span class="n">foreground</span><span class="o">=</span><span class="s2">&quot;#8E793E&quot;</span><span class="p">,</span>
+            <span class="n">height</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+            <span class="n">width</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+            <span class="n">font</span><span class="o">=</span><span class="s2">&quot;times 20 bold&quot;</span><span class="p">,</span>
+            <span class="n">command</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">obj</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">dni_add</span><span class="o">.</span><span class="n">get</span><span class="p">(),</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">lastname_add</span><span class="o">.</span><span class="n">get</span><span class="p">(),</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">class_add</span><span class="o">.</span><span class="n">get</span><span class="p">(),</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">plan_add</span><span class="o">.</span><span class="n">get</span><span class="p">(),</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">success</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">button_container</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">dni_add</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">lastname_add</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">class_add</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">plan_add</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">del_btn</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="n">state</span><span class="o">=</span><span class="s2">&quot;disabled&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_btn</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">in_</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">button_container</span><span class="p">,</span> <span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">del_btn</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span>
+            <span class="n">text</span><span class="o">=</span><span class="s2">&quot;DEL&quot;</span><span class="p">,</span>
+            <span class="n">background</span><span class="o">=</span><span class="s2">&quot;#231F20&quot;</span><span class="p">,</span>
+            <span class="n">foreground</span><span class="o">=</span><span class="s2">&quot;#8E793E&quot;</span><span class="p">,</span>
+            <span class="n">height</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+            <span class="n">width</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+            <span class="n">font</span><span class="o">=</span><span class="s2">&quot;times 20 bold&quot;</span><span class="p">,</span>
+            <span class="n">command</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">obj</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">del_btn</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">success</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">button_container</span>
+            <span class="p">),</span>
+            <span class="n">state</span><span class="o">=</span><span class="s2">&quot;disabled&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">del_btn</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">in_</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">button_container</span><span class="p">,</span> <span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">dni_add</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">lastname_add</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">class_add</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">plan_add</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">StringVar</span><span class="p">(),</span>
+            <span class="n">StringVar</span><span class="p">(),</span>
+            <span class="n">StringVar</span><span class="p">(),</span>
+            <span class="n">StringVar</span><span class="p">(),</span>
+        <span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">add_btn_monitor</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+            <span class="n">dni</span><span class="p">,</span> <span class="n">lastname</span><span class="p">,</span> <span class="n">class_</span><span class="p">,</span> <span class="n">plan</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">dni_add</span><span class="o">.</span><span class="n">get</span><span class="p">(),</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">lastname_add</span><span class="o">.</span><span class="n">get</span><span class="p">(),</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">class_add</span><span class="o">.</span><span class="n">get</span><span class="p">(),</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">plan_add</span><span class="o">.</span><span class="n">get</span><span class="p">(),</span>
+            <span class="p">)</span>
+            <span class="k">if</span> <span class="n">dni</span> <span class="ow">and</span> <span class="n">lastname</span> <span class="ow">and</span> <span class="n">class_</span> <span class="o">!=</span> <span class="s2">&quot;None&quot;</span> <span class="ow">and</span> <span class="n">plan</span> <span class="o">!=</span> <span class="s2">&quot;None&quot;</span><span class="p">:</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">add_btn</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">state</span><span class="o">=</span><span class="s2">&quot;normal&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">add_btn</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">state</span><span class="o">=</span><span class="s2">&quot;disabled&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">dni_add</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">add_btn_monitor</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lastname_add</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">add_btn_monitor</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">class_add</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">add_btn_monitor</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plan_add</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">add_btn_monitor</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">class_add</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plan_add</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_dni</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;DNI&quot;</span><span class="p">,</span> <span class="n">font</span><span class="o">=</span><span class="s2">&quot;times 10 italic&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_dni</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">in_</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">form_container</span><span class="p">,</span> <span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">W</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">entry_dni</span> <span class="o">=</span> <span class="n">Entry</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="n">textvariable</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dni_add</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">entry_dni</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">in_</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">form_container</span><span class="p">,</span> <span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_lastname</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;Last name&quot;</span><span class="p">,</span> <span class="n">font</span><span class="o">=</span><span class="s2">&quot;times 10 italic&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_lastname</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">in_</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">form_container</span><span class="p">,</span> <span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">entry_lastname</span> <span class="o">=</span> <span class="n">Entry</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="n">textvariable</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">lastname_add</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">entry_lastname</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">in_</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">form_container</span><span class="p">,</span> <span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">W</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_class</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;Class&quot;</span><span class="p">,</span> <span class="n">font</span><span class="o">=</span><span class="s2">&quot;times 10 italic&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_class</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">in_</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">form_container</span><span class="p">,</span> <span class="n">row</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="n">Radiobutton</span><span class="p">(</span>
+            <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Weight Machines&quot;</span><span class="p">,</span> <span class="n">variable</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">class_add</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="s2">&quot;Weight Machines&quot;</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">in_</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">form_container</span><span class="p">,</span> <span class="n">row</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">W</span><span class="p">)</span>
+        <span class="n">Radiobutton</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;Spinning&quot;</span><span class="p">,</span> <span class="n">variable</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">class_add</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="s2">&quot;Spinning&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span>
+            <span class="n">in_</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">form_container</span><span class="p">,</span> <span class="n">row</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">W</span>
+        <span class="p">)</span>
+
+        <span class="n">Radiobutton</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;Cross Fit&quot;</span><span class="p">,</span> <span class="n">variable</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">class_add</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="s2">&quot;Cross Fit&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span>
+            <span class="n">in_</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">form_container</span><span class="p">,</span> <span class="n">row</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">W</span>
+        <span class="p">)</span>
+        <span class="n">add_plan</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;Plan&quot;</span><span class="p">,</span> <span class="n">font</span><span class="o">=</span><span class="s2">&quot;times 10 italic&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+        <span class="n">add_plan</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">in_</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">form_container</span><span class="p">,</span> <span class="n">row</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+        <span class="n">Radiobutton</span><span class="p">(</span>
+            <span class="n">text</span><span class="o">=</span><span class="s2">&quot;1 month ($300)&quot;</span><span class="p">,</span> <span class="n">variable</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">plan_add</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="s2">&quot;One month&quot;</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">in_</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">form_container</span><span class="p">,</span> <span class="n">row</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">W</span><span class="p">)</span>
+        <span class="n">Radiobutton</span><span class="p">(</span>
+            <span class="n">text</span><span class="o">=</span><span class="s2">&quot;3 months ($700)&quot;</span><span class="p">,</span> <span class="n">variable</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">plan_add</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="s2">&quot;Three months&quot;</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">in_</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">form_container</span><span class="p">,</span> <span class="n">row</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">W</span><span class="p">)</span>
+
+        <span class="n">Radiobutton</span><span class="p">(</span>
+            <span class="n">text</span><span class="o">=</span><span class="s2">&quot;6 months ($1000)&quot;</span><span class="p">,</span> <span class="n">variable</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">plan_add</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="s2">&quot;Semestral&quot;</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">in_</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">form_container</span><span class="p">,</span> <span class="n">row</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">W</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">success</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Success!&quot;</span><span class="p">,</span> <span class="n">foreground</span><span class="o">=</span><span class="s2">&quot;#AD974F&quot;</span><span class="p">,</span> <span class="n">font</span><span class="o">=</span><span class="s2">&quot;times 15 bold&quot;</span>
+        <span class="p">)</span>
+
+        <span class="c1"># TAB 2</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">modify_container1</span> <span class="o">=</span> <span class="n">Frame</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="n">background</span><span class="o">=</span><span class="s2">&quot;#231F20&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">modify_container1</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">in_</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tab2</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">modify_container2</span> <span class="o">=</span> <span class="n">Frame</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">verify_search_monitor</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">modify_search_button</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">state</span><span class="o">=</span><span class="s2">&quot;disabled&quot;</span><span class="p">)</span>
+            <span class="n">num</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">searched_dni_modify</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+            <span class="n">dni_pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s2">&quot;^[0-9]{7,8}$&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">dni_pattern</span><span class="p">,</span> <span class="n">num</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">modify_search_button</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">state</span><span class="o">=</span><span class="s2">&quot;normal&quot;</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">submit_monitor</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">submit_changes_btn</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">state</span><span class="o">=</span><span class="s2">&quot;disabled&quot;</span><span class="p">)</span>
+            <span class="n">var1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">new_class</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+            <span class="n">var2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">new_plan</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">var1</span> <span class="ow">and</span> <span class="n">var2</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">submit_changes_btn</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">state</span><span class="o">=</span><span class="s2">&quot;normal&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">searched_dni_modify</span> <span class="o">=</span> <span class="n">StringVar</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">searched_dni_modify</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">verify_search_monitor</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">new_class</span> <span class="o">=</span> <span class="n">StringVar</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">new_class</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">submit_monitor</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">new_plan</span> <span class="o">=</span> <span class="n">StringVar</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">new_plan</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">submit_monitor</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">search_dni_modify</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span>
+            <span class="n">text</span><span class="o">=</span><span class="s2">&quot;DNI&quot;</span><span class="p">,</span>
+            <span class="n">font</span><span class="o">=</span><span class="s2">&quot;times 10 italic&quot;</span><span class="p">,</span>
+            <span class="n">width</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+            <span class="n">background</span><span class="o">=</span><span class="s2">&quot;#231F20&quot;</span><span class="p">,</span>
+            <span class="n">foreground</span><span class="o">=</span><span class="s2">&quot;#8E793E&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">search_dni_modify</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span>
+            <span class="n">in_</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">modify_container1</span><span class="p">,</span> <span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">W</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">entry_dni_modify</span> <span class="o">=</span> <span class="n">Entry</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="n">textvariable</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">searched_dni_modify</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">20</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">entry_dni_modify</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">in_</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">modify_container1</span><span class="p">,</span> <span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">modify_label5</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">modify_label6</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">modify_label7</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">modify_label8</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tree</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">Treeview</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">success2</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span>
+            <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Changes submited&quot;</span><span class="p">,</span>
+            <span class="n">foreground</span><span class="o">=</span><span class="s2">&quot;#AD974F&quot;</span><span class="p">,</span>
+            <span class="n">font</span><span class="o">=</span><span class="s2">&quot;times 12 bold&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">error</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;No Changes&quot;</span><span class="p">,</span> <span class="n">foreground</span><span class="o">=</span><span class="s2">&quot;#f04b4c&quot;</span><span class="p">,</span> <span class="n">font</span><span class="o">=</span><span class="s2">&quot;times 15 bold&quot;</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">modify_search_button</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span>
+            <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Search&quot;</span><span class="p">,</span>
+            <span class="n">width</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+            <span class="n">background</span><span class="o">=</span><span class="s2">&quot;#231F20&quot;</span><span class="p">,</span>
+            <span class="n">foreground</span><span class="o">=</span><span class="s2">&quot;#8E793E&quot;</span><span class="p">,</span>
+            <span class="n">font</span><span class="o">=</span><span class="s2">&quot;times 10 bold&quot;</span><span class="p">,</span>
+            <span class="n">command</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">obj</span><span class="o">.</span><span class="n">verify_search</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">searched_dni_modify</span><span class="o">.</span><span class="n">get</span><span class="p">(),</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">tab2</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">modify_container2</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">modify_label5</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">modify_label6</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">modify_label7</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">modify_label8</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="n">state</span><span class="o">=</span><span class="s2">&quot;disabled&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">modify_search_button</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">in_</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">modify_container1</span><span class="p">,</span> <span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">modify_label1</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span>
+            <span class="n">text</span><span class="o">=</span><span class="s2">&quot;DNI&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">background</span><span class="o">=</span><span class="s2">&quot;#231F20&quot;</span><span class="p">,</span> <span class="n">foreground</span><span class="o">=</span><span class="s2">&quot;#8E793E&quot;</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">modify_label1</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span>
+            <span class="n">in_</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">modify_container2</span><span class="p">,</span>
+            <span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+            <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">modify_label2</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span>
+            <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Lastname&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">background</span><span class="o">=</span><span class="s2">&quot;#231F20&quot;</span><span class="p">,</span> <span class="n">foreground</span><span class="o">=</span><span class="s2">&quot;#8E793E&quot;</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">modify_label2</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">in_</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">modify_container2</span><span class="p">,</span> <span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">modify_label3</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span>
+            <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Selected Class&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">background</span><span class="o">=</span><span class="s2">&quot;#231F20&quot;</span><span class="p">,</span> <span class="n">foreground</span><span class="o">=</span><span class="s2">&quot;#8E793E&quot;</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">modify_label3</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">in_</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">modify_container2</span><span class="p">,</span> <span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">modify_label4</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span>
+            <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Selected Plan&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">background</span><span class="o">=</span><span class="s2">&quot;#231F20&quot;</span><span class="p">,</span> <span class="n">foreground</span><span class="o">=</span><span class="s2">&quot;#8E793E&quot;</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">modify_label4</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">in_</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">modify_container2</span><span class="p">,</span> <span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">modify_label5</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span>
+            <span class="n">in_</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">modify_container2</span><span class="p">,</span>
+            <span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+            <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">modify_label6</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">in_</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">modify_container2</span><span class="p">,</span> <span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">modify_label7</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">in_</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">modify_container2</span><span class="p">,</span> <span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">modify_label8</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">in_</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">modify_container2</span><span class="p">,</span> <span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">modify_label11</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span>
+            <span class="n">text</span><span class="o">=</span><span class="s2">&quot;New Class&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">background</span><span class="o">=</span><span class="s2">&quot;#231F20&quot;</span><span class="p">,</span> <span class="n">foreground</span><span class="o">=</span><span class="s2">&quot;#EAEAEA&quot;</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">modify_label11</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">in_</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">modify_container2</span><span class="p">,</span> <span class="n">row</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">modify_label12</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span>
+            <span class="n">text</span><span class="o">=</span><span class="s2">&quot;New Plan&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">background</span><span class="o">=</span><span class="s2">&quot;#231F20&quot;</span><span class="p">,</span> <span class="n">foreground</span><span class="o">=</span><span class="s2">&quot;#EAEAEA&quot;</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">modify_label12</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">in_</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">modify_container2</span><span class="p">,</span> <span class="n">row</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">modify_combo1</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">Combobox</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="n">textvariable</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">new_class</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="s2">&quot;readonly&quot;</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">modify_combo1</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">in_</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">modify_container2</span><span class="p">,</span> <span class="n">row</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">modify_combo1</span><span class="p">[</span><span class="s2">&quot;values&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;Weight Machines&quot;</span><span class="p">,</span> <span class="s2">&quot;Spinning&quot;</span><span class="p">,</span> <span class="s2">&quot;Crossfit&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">modify_combo2</span> <span class="o">=</span> <span class="n">ttk</span><span class="o">.</span><span class="n">Combobox</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="n">textvariable</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">new_plan</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="s2">&quot;readonly&quot;</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">modify_combo2</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">in_</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">modify_container2</span><span class="p">,</span> <span class="n">row</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">modify_combo2</span><span class="p">[</span><span class="s2">&quot;values&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;1 Month&quot;</span><span class="p">,</span> <span class="s2">&quot;3 Months&quot;</span><span class="p">,</span> <span class="s2">&quot;6 Months&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">submit_changes_btn</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span>
+            <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Submit Changes&quot;</span><span class="p">,</span>
+            <span class="n">width</span><span class="o">=</span><span class="mi">19</span><span class="p">,</span>
+            <span class="n">background</span><span class="o">=</span><span class="s2">&quot;#EAEAEA&quot;</span><span class="p">,</span>
+            <span class="n">foreground</span><span class="o">=</span><span class="s2">&quot;#8E793E&quot;</span><span class="p">,</span>
+            <span class="n">font</span><span class="o">=</span><span class="s2">&quot;times 10 bold&quot;</span><span class="p">,</span>
+            <span class="n">state</span><span class="o">=</span><span class="s2">&quot;disabled&quot;</span><span class="p">,</span>
+            <span class="n">command</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">obj</span><span class="o">.</span><span class="n">submit_changes</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">modify_label5</span><span class="o">.</span><span class="n">cget</span><span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">),</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">new_class</span><span class="o">.</span><span class="n">get</span><span class="p">(),</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">new_plan</span><span class="o">.</span><span class="n">get</span><span class="p">(),</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">modify_label7</span><span class="o">.</span><span class="n">cget</span><span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">),</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">modify_label8</span><span class="o">.</span><span class="n">cget</span><span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">),</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">modify_container2</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">entry_dni_modify</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">modify_combo1</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">modify_combo2</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">del_btn</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">success2</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">modify_container1</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">error</span><span class="p">,</span>
+            <span class="p">),</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">submit_changes_btn</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">in_</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">modify_container2</span><span class="p">,</span> <span class="n">row</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">searched_dni_modify</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">verify_search_monitor</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">new_class</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">submit_monitor</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">new_plan</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">submit_monitor</span><span class="p">)</span>
+        <span class="c1"># Tree menu</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">menu_container</span> <span class="o">=</span> <span class="n">Frame</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">menu_container</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">side</span><span class="o">=</span><span class="n">TOP</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">display_label</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span>
+            <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Display&quot;</span><span class="p">,</span>
+            <span class="n">font</span><span class="o">=</span><span class="s2">&quot;times 20 bold &quot;</span><span class="p">,</span>
+            <span class="n">foreground</span><span class="o">=</span><span class="s2">&quot;#8E793E&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">display_label</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">in_</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">menu_container</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="n">TOP</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="n">X</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">display1</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span>
+            <span class="n">text</span><span class="o">=</span><span class="s2">&quot;All&quot;</span><span class="p">,</span>
+            <span class="n">foreground</span><span class="o">=</span><span class="s2">&quot;#8E793E&quot;</span><span class="p">,</span>
+            <span class="n">background</span><span class="o">=</span><span class="s2">&quot;#231F20&quot;</span><span class="p">,</span>
+            <span class="n">command</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">obj</span><span class="o">.</span><span class="n">update_treeview</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">del_btn</span><span class="p">),</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">display1</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">in_</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">menu_container</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="n">LEFT</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">display2</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span>
+            <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Weight Machines&quot;</span><span class="p">,</span>
+            <span class="n">background</span><span class="o">=</span><span class="s2">&quot;#231F20&quot;</span><span class="p">,</span>
+            <span class="n">foreground</span><span class="o">=</span><span class="s2">&quot;#8E793E&quot;</span><span class="p">,</span>
+            <span class="n">command</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">obj</span><span class="o">.</span><span class="n">display_weights</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">del_btn</span><span class="p">),</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">display2</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">in_</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">menu_container</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="n">LEFT</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">display3</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span>
+            <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Spinning&quot;</span><span class="p">,</span>
+            <span class="n">background</span><span class="o">=</span><span class="s2">&quot;#231F20&quot;</span><span class="p">,</span>
+            <span class="n">foreground</span><span class="o">=</span><span class="s2">&quot;#8E793E&quot;</span><span class="p">,</span>
+            <span class="n">command</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">obj</span><span class="o">.</span><span class="n">display_spinning</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">del_btn</span><span class="p">),</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">display3</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">in_</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">menu_container</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="n">LEFT</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">display4</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span>
+            <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Crossfit&quot;</span><span class="p">,</span>
+            <span class="n">background</span><span class="o">=</span><span class="s2">&quot;#231F20&quot;</span><span class="p">,</span>
+            <span class="n">foreground</span><span class="o">=</span><span class="s2">&quot;#8E793E&quot;</span><span class="p">,</span>
+            <span class="n">command</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">obj</span><span class="o">.</span><span class="n">display_crossfit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">del_btn</span><span class="p">),</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">display4</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">in_</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">menu_container</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="n">LEFT</span><span class="p">)</span>
+
+        <span class="c1"># Tree</span>
+
+        <span class="c1"># self.tree = ttk.Treeview(self.root)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="p">[</span><span class="s2">&quot;columns&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;Lastname&quot;</span><span class="p">,</span> <span class="s2">&quot;Class&quot;</span><span class="p">,</span> <span class="s2">&quot;Plan&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">column</span><span class="p">(</span><span class="s2">&quot;#0&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span> <span class="n">anchor</span><span class="o">=</span><span class="n">CENTER</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">column</span><span class="p">(</span><span class="s2">&quot;Lastname&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">anchor</span><span class="o">=</span><span class="n">CENTER</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">column</span><span class="p">(</span><span class="s2">&quot;Class&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">anchor</span><span class="o">=</span><span class="n">CENTER</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">column</span><span class="p">(</span><span class="s2">&quot;Plan&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">anchor</span><span class="o">=</span><span class="n">CENTER</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">heading</span><span class="p">(</span><span class="s2">&quot;#0&quot;</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;DNI&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">heading</span><span class="p">(</span><span class="s2">&quot;Lastname&quot;</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Member Lastname&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">heading</span><span class="p">(</span><span class="s2">&quot;Class&quot;</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Class&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">heading</span><span class="p">(</span><span class="s2">&quot;Plan&quot;</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;Plan&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">expand</span><span class="o">=</span><span class="s2">&quot;true&quot;</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="s2">&quot;both&quot;</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">del_btn_monitor</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+            <span class="n">obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">selection</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">obj</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">del_btn</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">state</span><span class="o">=</span><span class="s2">&quot;normal&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="s2">&quot;&lt;ButtonRelease-1&gt;&quot;</span><span class="p">,</span> <span class="n">del_btn_monitor</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Martin Arguello.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

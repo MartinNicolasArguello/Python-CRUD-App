@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>model module &mdash; Martin Arguello entrega final 00.00.01 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="observers module" href="observers.html" />
+    <link rel="prev" title="controler module" href="controler.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Martin Arguello entrega final
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Martin Arguello python avanzado</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="controler.html">controler module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">model module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#model.Model"><code class="docutils literal notranslate"><span class="pre">Model</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#model.Model.add_success"><code class="docutils literal notranslate"><span class="pre">Model.add_success()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#model.Model.create_base"><code class="docutils literal notranslate"><span class="pre">Model.create_base()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#model.Model.decorator"><code class="docutils literal notranslate"><span class="pre">Model.decorator()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#model.Model.delete"><code class="docutils literal notranslate"><span class="pre">Model.delete()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#model.Model.display_crossfit"><code class="docutils literal notranslate"><span class="pre">Model.display_crossfit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#model.Model.display_form"><code class="docutils literal notranslate"><span class="pre">Model.display_form()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#model.Model.display_spinning"><code class="docutils literal notranslate"><span class="pre">Model.display_spinning()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#model.Model.display_weights"><code class="docutils literal notranslate"><span class="pre">Model.display_weights()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#model.Model.insert"><code class="docutils literal notranslate"><span class="pre">Model.insert()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#model.Model.modify_error"><code class="docutils literal notranslate"><span class="pre">Model.modify_error()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#model.Model.modify_success"><code class="docutils literal notranslate"><span class="pre">Model.modify_success()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#model.Model.reset_add_form"><code class="docutils literal notranslate"><span class="pre">Model.reset_add_form()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#model.Model.reset_mod_form"><code class="docutils literal notranslate"><span class="pre">Model.reset_mod_form()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#model.Model.submit_changes"><code class="docutils literal notranslate"><span class="pre">Model.submit_changes()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#model.Model.update_treeview"><code class="docutils literal notranslate"><span class="pre">Model.update_treeview()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#model.Model.verify_search"><code class="docutils literal notranslate"><span class="pre">Model.verify_search()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="observers.html">observers module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="view.html">view module</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Martin Arguello entrega final</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">Martin Arguello python avanzado</a></li>
+      <li class="breadcrumb-item active">model module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/model.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-model">
+<span id="model-module"></span><h1>model module<a class="headerlink" href="#module-model" title="Permalink to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="model.Model">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">model.</span></span><span class="sig-name descname"><span class="pre">Model</span></span><a class="reference internal" href="_modules/model.html#Model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#model.Model" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="observers.html#observers.Observed" title="observers.Observed"><code class="xref py py-class docutils literal notranslate"><span class="pre">Observed</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="model.Model.add_success">
+<span class="sig-name descname"><span class="pre">add_success</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">row</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">column</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">root</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">success</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">button_container</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/model.html#Model.add_success"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#model.Model.add_success" title="Permalink to this definition"></a></dt>
+<dd><p>Presenta un mensaje temporal (1 segundo de duración) informando el éxito de la operación “Insert” o “Delete”, dependiendo de cual de estas dos funciones llame al método, será la ubicación del mensaje temporal</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="model.Model.create_base">
+<span class="sig-name descname"><span class="pre">create_base</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/model.html#Model.create_base"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#model.Model.create_base" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="model.Model.decorator">
+<span class="sig-name descname"><span class="pre">decorator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/model.html#Model.decorator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#model.Model.decorator" title="Permalink to this definition"></a></dt>
+<dd><p>El decorador “envuelve” a las funciones que modifican entradas en la base de datos, su única función es “avisar” por consola de la modificación, imprimiendo desde que función fue llamado y a que hora.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="model.Model.delete">
+<span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/model.html#Model.delete"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#model.Model.delete" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="model.Model.display_crossfit">
+<span class="sig-name descname"><span class="pre">display_crossfit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tree</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">del_btn</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/model.html#Model.display_crossfit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#model.Model.display_crossfit" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="model.Model.display_form">
+<span class="sig-name descname"><span class="pre">display_form</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tab2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modify_container2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modify_label5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modify_label6</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modify_label7</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modify_label8</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/model.html#Model.display_form"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#model.Model.display_form" title="Permalink to this definition"></a></dt>
+<dd><p>Una vez verificado el DNI, esta función presenta el formulario para modificar el usuario.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="model.Model.display_spinning">
+<span class="sig-name descname"><span class="pre">display_spinning</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tree</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">del_btn</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/model.html#Model.display_spinning"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#model.Model.display_spinning" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="model.Model.display_weights">
+<span class="sig-name descname"><span class="pre">display_weights</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tree</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">del_btn</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/model.html#Model.display_weights"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#model.Model.display_weights" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="model.Model.insert">
+<span class="sig-name descname"><span class="pre">insert</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/model.html#Model.insert"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#model.Model.insert" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="model.Model.modify_error">
+<span class="sig-name descname"><span class="pre">modify_error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">error</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modify_container2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">root</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/model.html#Model.modify_error"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#model.Model.modify_error" title="Permalink to this definition"></a></dt>
+<dd><p>Se encarga de presentar un mensaje temporal (1 segundo de duración) informando un fallo de la operación “Modify”</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="model.Model.modify_success">
+<span class="sig-name descname"><span class="pre">modify_success</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">success2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modify_container1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">root</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/model.html#Model.modify_success"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#model.Model.modify_success" title="Permalink to this definition"></a></dt>
+<dd><p>Se encarga de presentar un mensaje temporal (1 segundo de duración) informando el éxito de la operación “Modify”</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="model.Model.reset_add_form">
+<span class="sig-name descname"><span class="pre">reset_add_form</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dni_add</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lastname_add</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_add</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plan_add</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/model.html#Model.reset_add_form"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#model.Model.reset_add_form" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="model.Model.reset_mod_form">
+<span class="sig-name descname"><span class="pre">reset_mod_form</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">modify_container2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">entry_dni_modify</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modify_combo1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modify_combo2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/model.html#Model.reset_mod_form"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#model.Model.reset_mod_form" title="Permalink to this definition"></a></dt>
+<dd><p>Después de realizada la operación, vuelve a esconder el formulario para modificar.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="model.Model.submit_changes">
+<span class="sig-name descname"><span class="pre">submit_changes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/model.html#Model.submit_changes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#model.Model.submit_changes" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="model.Model.update_treeview">
+<span class="sig-name descname"><span class="pre">update_treeview</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tree</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">del_btn</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/model.html#Model.update_treeview"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#model.Model.update_treeview" title="Permalink to this definition"></a></dt>
+<dd><p>Actualiza la información que presenta el treeview, las restantes funciones sirven para mostrar solo los miembros pertenecientes a la clase correspondiente.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="model.Model.verify_search">
+<span class="sig-name descname"><span class="pre">verify_search</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">searched_dni</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tab2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modify_container2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modify_label5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modify_label6</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modify_label7</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modify_label8</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/model.html#Model.verify_search"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#model.Model.verify_search" title="Permalink to this definition"></a></dt>
+<dd><p>Comprueba si el DNI pertenece a un usuario.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="controler.html" class="btn btn-neutral float-left" title="controler module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="observers.html" class="btn btn-neutral float-right" title="observers module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Martin Arguello.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
